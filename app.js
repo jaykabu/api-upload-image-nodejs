@@ -2,9 +2,21 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose')
 
 const productsRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders')
+
+mongoose.connect("mongodb://localhost:27017/node-shop", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+}).then(() => {
+    console.log('connected')
+}).catch((err) => {
+    console.log('connection failed')
+});
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
